@@ -127,23 +127,6 @@ class BERTAgeDataset(Dataset):
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         return self.samples[idx]
 
-
-# %% quick sanity check
-if __name__ == "__main__":
-    ds = BERTAgeDataset(JSONL_PATH)
-
-    print("Total chunk samples:", len(ds))
-
-    for i in range(min(3, len(ds))):
-        item = ds[i]
-        print(f"\n--- SAMPLE {i} ---")
-        print("doc_id:", item["doc_id"])
-        print("chunk_id:", item["chunk_id"])
-        print("label:", item["label"])
-        print("age_group_id:", item["age_group_id"])
-        print("chunk_tokens:", item["chunk_tokens"])
-        print("text preview:", item["text"][:300].replace("\n", " "))
-
 #чтобы можно было передать аругменты,тк токены хочу использовать
 #510. 768 и 1024, а также проводить эксперименты в гугл колабе
 def parse_args():
