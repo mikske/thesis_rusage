@@ -4,6 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 import sys
 import json
+import argparse
 from typing import List, Dict, Any, Set
 
 from torch.utils.data import Dataset
@@ -143,10 +144,30 @@ if __name__ == "__main__":
         print("chunk_tokens:", item["chunk_tokens"])
         print("text preview:", item["text"][:300].replace("\n", " "))
 
+#чтобы можно было передать аругменты,тк токены хочу использовать
+#510. 768 и 1024, а также проводить эксперименты в гугл колабе
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--input_path", type=str, required=True)
+    parser.add_argument("--output_path", type=str, required=True)
+
+    parser.add_argument("--max_tokens", type=int, default=510)
+    parser.add_argument("--min_tokens", type=int, default=80)
+
+    return parser.parse_args()
 
 # %% dataset stats + save
 if __name__ == "__main__":
-    ds = BERTAgeDataset(JSONL_PATH)
+    args = parse_args()
+
+    ds = BERTAgeDataset(
+        jsonl_path=Path(args.input_path),
+        max_tokens=args.max_tokens,
+        min_tokens=args.min_tokens,
+    )
+
+    print("Total chunk samples:", len(ds))
 
     label_counts = {0: 0, 1: 0}
     doc_ids = set()
@@ -167,22 +188,22 @@ if __name__ == "__main__":
     print("\n=== DATASET STATS ===")
     print("unique docs:", len(doc_ids))
     print("chunk samples:", len(ds))
-    print("label 0 (age_group_id=1):", label_counts[0])
-    print("label 1 (age_group_id=2):", label_counts[1])
+    print("label 0:", label_counts[0])
+    print("label 1:", label_counts[1])
 
     if lengths:
         print("\n=== TOKEN LENGTH STATS ===")
-        print("n:", n)
         print("min:", lengths[0])
         print("p50:", q(0.50))
         print("p75:", q(0.75))
         print("p90:", q(0.90))
-        print("p95:", q(0.95))
         print("max:", lengths[-1])
 
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+    output_path = Path(args.output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, "w", encoding="utf-8") as f:
         for sample in ds.samples:
             f.write(json.dumps(sample, ensure_ascii=False) + "\n")
 
-    print(f"\nDataset saved to: {OUTPUT_PATH}")
-    print(f"Total samples written: {len(ds.samples)}")
+    print(f"\nSaved to: {output_path}")
