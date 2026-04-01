@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 import re
 from collections import Counter
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Dict, List, Any, Tuple
 
 import torch
 from torch.utils.data import Dataset

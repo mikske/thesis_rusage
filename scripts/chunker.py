@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Callable, List, Tuple, Optional
+from typing import Callable, List, Tuple
 
 #сначала выделяем финальные знаки препинания "конца предложения"
 _SENT_END_RE = re.compile(

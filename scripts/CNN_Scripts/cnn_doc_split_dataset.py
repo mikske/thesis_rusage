@@ -116,7 +116,6 @@ def stratified_doc_split(
 
 #%%
 #добавляем сплит к чанкам
-
 def add_split_to_chunks(
         rows: List[Dict[str, Any]],
         train_docs: List[Dict[str, Any]],
