@@ -1,0 +1,120 @@
+from __future__ import annotations
+
+import argparse
+from typing import Dict
+
+import torch
+from transformers import AutoModelForSequenceClassification, AutoConfig
+
+#%%
+#аргументы
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--model_name", type=str, default="cointegrated/rubert-tiny2")
+    parser.add_argument("--num_labels", type=int, default=2)
+
+    #бейзлайн режимы
+    parser.add_argument("--freeze_encoder", type=int, default=0)
+
+    return parser.parse_args()
+
+#%%
+#загружаем бейзлайн конфиг
+# %%
+def build_config(
+    model_name: str,
+    num_labels: int = 2,
+):
+    config = AutoConfig.from_pretrained(model_name)
+    config.num_labels = num_labels
+    return config
+
+#%%
+#собираем бейзлайн модель: cointegrated/rubert-tiny2, classification head выход по num_labels=2
+def build_baseline_model(
+    model_name: str,
+    num_labels: int = 2,
+):
+    config = build_config(model_name=model_name, num_labels=num_labels)
+
+    model = AutoModelForSequenceClassification.from_pretrained(
+        model_name,
+        config=config,
+    )
+
+    return model
+
+#%%
+#здесь у нас заморзка энкодера, если хотим head only режим. будет обучаться только классификатор
+def freeze_encoder(model) -> None:
+    for name, param in model.named_parameters():
+        if "classifier" not in name:
+            param.requires_grad = False
+
+#%%
+#здесь у нас бейзлайн с обучаемыми параметрами
+def unfreeze_all(model) -> None:
+    for param in model.parameters():
+        param.requires_grad = True
+
+#%%
+#считаем сколько всего параметров, сколько обучаемых, сколько замороженых
+def count_parameters(model) -> Dict[str, int]:
+    total_params = sum(p.numel() for p in model.parameters())
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+    return {
+        "total_params": total_params,
+        "trainable_params": trainable_params,
+        "frozen_params": total_params - trainable_params,
+    }
+
+#%%
+#краткая статистика
+def print_model_stats(model) -> None:
+    stats = count_parameters(model)
+
+    print("\n=== MODEL STATS ===")
+    print(f"total params:     {stats['total_params']:,}")
+    print(f"trainable params: {stats['trainable_params']:,}")
+    print(f"frozen params:    {stats['frozen_params']:,}")
+
+#%%
+#основная функция сбора модели
+def build_model(
+    model_name: str,
+    num_labels: int = 2,
+    freeze_encoder_flag: int = 0,
+):
+    model = build_baseline_model(
+        model_name=model_name,
+        num_labels=num_labels,
+    )
+
+    if freeze_encoder_flag == 1:
+        freeze_encoder(model)
+    else:
+        unfreeze_all(model)
+
+    return model
+
+#%%
+#sanity check как всегда
+def main():
+    args = parse_args()
+
+    model = build_model(
+        model_name=args.model_name,
+        num_labels=args.num_labels,
+        freeze_encoder_flag=args.freeze_encoder,
+    )
+
+    print_model_stats(model)
+
+    print("\n=== MODEL HEAD ===")
+    print(model.classifier)
+
+#%%
+if __name__ == "__main__":
+    main()
