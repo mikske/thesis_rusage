@@ -1,89 +1,52 @@
-# =========================
-# Python
-# =========================
+data/
+datasets/
+*.jsonl
+*.csv
+*.tsv
+*.parquet
+
+artifacts/
+checkpoints/
+*.pt
+*.bin
+*.model
+*.ckpt
+
+*.safetensors
+
+logs/
+*.log
+*.out
+*.err
+wandb/
+mlruns/
+
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
 *.pyd
+*.egg-info/
+*.egg
+build/
+dist/
 
-# =========================
-# Jupyter
-# =========================
-.ipynb_checkpoints/
-
-# =========================
-# Virtual environments
-# =========================
-.venv/
+.env
+.venv
 venv/
 env/
+ENV/
 
-# =========================
-# macOS
-# =========================
+._*
 .DS_Store
 
-# =========================
-# IDE
-# =========================
 .idea/
 .vscode/
 
-# =========================
-# Logs / cache
-# =========================
-*.log
-.pytest_cache/
-.mypy_cache/
-.cache/
+.env
+*.env
 
-# =========================
-# DATASETS (твои основные папки)
-# =========================
-train/
-test/
-abstracts/
-previews/
-selected_previews/
-inter_json/
-data/
-
-# =========================
-# Data files
-# =========================
-*.txt
-*.jsonl
-*.parquet
-*.npy
-*.npz
-*.tsv
-
-# CSV — если хочешь оставить какой-то конкретный, раскомментируй ниже
-*.csv
-
-!full_metadata.csv
-
-# =========================
-# Model artifacts / weights
-# =========================
-artifacts/
-checkpoints/
-runs/
-wandb/
-*.pt
-*.bin
-*.vec
-*.ckpt
-
-# =========================
-# Embeddings
-# =========================
-fasttext/
-embeddings/
-
-# =========================
-# Archives (на всякий случай)
-# =========================
-*.zip
-*.tar
-*.tar.gz
+#SSD с датасетами
+/Volumes/
