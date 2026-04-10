@@ -93,9 +93,8 @@ def build_model(
     )
 
     if freeze_encoder_flag == 1:
-        freeze_encoder(model)
-    else:
-        unfreeze_all(model)
+        for param in model.base_model.parameters():
+            param.requires_grad = False
 
     return model
 
