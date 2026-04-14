@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument("--input_path", type=str, required=True)
     parser.add_argument("--model_name", type=str, default="cointegrated/rubert-tiny2")
     parser.add_argument("--max_length", type=int, default=510) #чтоб не падало случайно
-    parser.add_argument("--split", type=str, choices=["train", "valid", "test"], default="train")
+    parser.add_argument("--split", type=str, choices=["train", "val", "test"], default="train")
 
     return parser.parse_args()
 
