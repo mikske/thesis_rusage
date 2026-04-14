@@ -190,3 +190,7 @@ def main():
     print(f"[INFO] val size: {len(val_dataset)}")
     print(f"[INFO] freeze: {args.freeze}")
     print(f"[INFO] experiment_dir: {experiment_dir}")
+
+#%%
+if __name__ == "__main__":
+    main()
