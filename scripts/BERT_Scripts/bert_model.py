@@ -47,6 +47,67 @@ def build_baseline_model(
     return model
 
 #%%
+#для подсчета весов оборачиваем это все красиво
+class WeightedBERTClassifier(nn.Module):
+    def __init__(
+        self,
+        model_name: str,
+        num_labels: int = 2,
+        freeze_encoder_flag: int = 0,
+        class_weights: torch.Tensor | None = None,
+    ) -> None:
+        super().__init__()
+
+        config = build_config(model_name=model_name, num_labels=num_labels)
+
+        self.model = AutoModelForSequenceClassification.from_pretrained(
+            model_name,
+            config=config,
+        )
+
+        # если head-only, замораживаем encoder
+        if freeze_encoder_flag == 1:
+            for param in self.model.base_model.parameters():
+                param.requires_grad = False
+
+        # сохраняем веса классов внутри модели
+        if class_weights is not None:
+            self.register_buffer("class_weights", class_weights)
+        else:
+            self.class_weights = None
+
+    def forward(
+        self,
+        input_ids=None,
+        attention_mask=None,
+        labels=None,
+        **kwargs,
+    ):
+        outputs = self.model(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            labels=None,  # стандартный loss HF не используем
+            **kwargs,
+        )
+
+        logits = outputs.logits
+        loss = None
+
+        if labels is not None:
+            if self.class_weights is not None:
+                loss_fct = nn.CrossEntropyLoss(weight=self.class_weights)
+            else:
+                loss_fct = nn.CrossEntropyLoss()
+
+            loss = loss_fct(logits, labels)
+
+        return {
+            "loss": loss,
+            "logits": logits,
+        }
+
+
+#%%
 #здесь у нас заморзка энкодера, если хотим head only режим. будет обучаться только классификатор
 def freeze_encoder(model) -> None:
     for name, param in model.named_parameters():
