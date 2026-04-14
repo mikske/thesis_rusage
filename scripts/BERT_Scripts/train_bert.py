@@ -158,7 +158,6 @@ def main():
     trainer = Trainer(
         model=model,
         args=training_args,
-        train_dataset=train_dataset,
         eval_dataset=val_dataset,
         tokenizer=tokenizer,
         compute_metrics=build_compute_metrics_fn(),
