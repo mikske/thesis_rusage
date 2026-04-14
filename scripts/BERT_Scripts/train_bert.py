@@ -131,7 +131,6 @@ def main():
     #переходим к аргументам тренирвоки
     training_args = TrainingArguments(
         output_dir=str(experiment_dir / "trainer_output"),
-        overwrite_output_dir=True,
 
         #оцениваем раз в эпоху, сохраняем раз в эпоху
         eval_strategy="epoch",
