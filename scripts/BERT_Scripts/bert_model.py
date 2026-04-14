@@ -51,10 +51,11 @@ class WeightedBERTClassifier(nn.Module):
             config=config,
         )
 
-        # если head-only, замораживаем encoder
-        if freeze_encoder_flag == 1:
-            for param in self.model.base_model.parameters():
-                param.requires_grad = False
+        # здесь у нас заморзка энкодера, если хотим head only режим. будет обучаться только классификатор
+        def freeze_encoder(model) -> None:
+            for name, param in model.named_parameters():
+                if "classifier" not in name:
+                    param.requires_grad = False
 
         # сохраняем веса классов внутри модели
         if class_weights is not None:
