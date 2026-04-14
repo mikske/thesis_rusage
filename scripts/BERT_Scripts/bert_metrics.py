@@ -14,6 +14,28 @@ def compute_classification_metrics(
     y_true: List[int],
     y_pred: List[int],
 ) -> Dict[str, float]:
+    accuracy = accuracy_score(y_true, y_pred)
+
+    macro_precision, macro_recall, macro_f1, _ = precision_recall_fscore_support(
+        y_true,
+        y_pred,
+        average="macro",
+        zero_division=0,
+    )
+
+    weighted_precision, weighted_recall, weighted_f1, _ = precision_recall_fscore_support(
+        y_true,
+        y_pred,
+        average="weighted",
+        zero_division=0,
+    )
+
+    precision_by_class, recall_by_class, f1_by_class, support_by_class = precision_recall_fscore_support(
+        y_true,
+        y_pred,
+        average=None,
+        zero_division=0,
+    )
 
     metrics = {
         "accuracy": float(accuracy_score(y_true, y_pred)),
