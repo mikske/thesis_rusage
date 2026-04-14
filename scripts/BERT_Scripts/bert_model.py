@@ -92,14 +92,6 @@ class WeightedBERTClassifier(nn.Module):
             "logits": logits,
         }
 
-
-#%%
-#здесь у нас заморзка энкодера, если хотим head only режим. будет обучаться только классификатор
-def freeze_encoder(model) -> None:
-    for name, param in model.named_parameters():
-        if "classifier" not in name:
-            param.requires_grad = False
-
 #%%
 #здесь у нас бейзлайн с обучаемыми параметрами
 def unfreeze_all(model) -> None:
