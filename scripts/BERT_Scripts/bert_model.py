@@ -148,6 +148,7 @@ def build_model(
     model_name: str,
     num_labels: int = 2,
     freeze_encoder_flag: int = 0,
+    class_weights: torch.Tensor | None = None,
 ):
     model = build_baseline_model(
         model_name=model_name,
