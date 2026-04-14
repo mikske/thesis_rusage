@@ -172,6 +172,7 @@ def main():
         model_name=args.model_name,
         num_labels=args.num_labels,
         freeze_encoder_flag=args.freeze_encoder,
+        class_weights=None
     )
 
     print_model_stats(model)
