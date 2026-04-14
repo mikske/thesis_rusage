@@ -136,10 +136,6 @@ def build_model(
         class_weights=class_weights,
     )
 
-    if freeze_encoder_flag == 1:
-        for param in model.base_model.parameters():
-            param.requires_grad = False
-
     return model
 
 #%%
