@@ -150,7 +150,7 @@ def build_model(
     freeze_encoder_flag: int = 0,
     class_weights: torch.Tensor | None = None,
 ):
-    model = build_baseline_model(
+    model = WeightedBERTClassifier(
         model_name=model_name,
         num_labels=num_labels,
     )
