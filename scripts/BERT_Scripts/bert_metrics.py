@@ -49,6 +49,14 @@ def compute_classification_metrics(
         "weighted_f1": float(weighted_f1),
     }
 
+    for class_id, (p, r, f1, support) in enumerate(
+            zip(precision_by_class, recall_by_class, f1_by_class, support_by_class)
+    ):
+        metrics[f"precision_class_{class_id}"] = float(p)
+        metrics[f"recall_class_{class_id}"] = float(r)
+        metrics[f"f1_class_{class_id}"] = float(f1)
+        metrics[f"support_class_{class_id}"] = float(support)
+
     return metrics
 
 
