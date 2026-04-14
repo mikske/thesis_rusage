@@ -33,20 +33,6 @@ def build_config(
 
 #%%
 #собираем бейзлайн модель: cointegrated/rubert-tiny2, classification head выход по num_labels=2
-def build_baseline_model(
-    model_name: str,
-    num_labels: int = 2,
-):
-    config = build_config(model_name=model_name, num_labels=num_labels)
-
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_name,
-        config=config,
-    )
-
-    return model
-
-#%%
 #для подсчета весов оборачиваем это все красиво
 class WeightedBERTClassifier(nn.Module):
     def __init__(
