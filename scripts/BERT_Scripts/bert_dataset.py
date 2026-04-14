@@ -65,7 +65,7 @@ class BERTDataset(Dataset):
             if row.get("split") != self.split:
                 continue
 
-            text = row.get("text").strip()
+            text = (row.get("text") or "").strip()
             label = row.get("label")
             doc_id = row.get("doc_id")
             chunk_id = row.get("chunk_id")
