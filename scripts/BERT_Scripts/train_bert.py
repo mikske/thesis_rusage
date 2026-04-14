@@ -10,11 +10,11 @@ from transformers import (
     TrainingArguments,
 )
 
-from bert_dataset import build_bert_datasets
-from bert_model import build_model
-from bert_metrics import compute_classification_metrics
-from bert_train_utils import create_experiment_dir, set_seed, build_run_config
-from bert_metrics_logger import save_json, save_chunk_level_metrics
+from scripts.BERT_Scripts.bert_dataset import build_bert_datasets
+from scripts.BERT_Scripts.bert_model import build_model
+from scripts.BERT_Scripts.bert_metrics import compute_classification_metrics
+from scripts.BERT_Scripts.bert_train_utils import create_experiment_dir, set_seed, build_run_config
+from scripts.BERT_Scripts.bert_metrics_logger import save_json, save_chunk_level_metrics
 
 #%%
 #обработка аргументов
