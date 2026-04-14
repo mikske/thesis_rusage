@@ -111,7 +111,7 @@ def main():
     val_dataset, tokenizer = build_bert_datasets(
         json_path=input_path,
         model_name=args.model_name,
-        split="valid",
+        split="val",
         max_length=args.max_length,
     )
 
