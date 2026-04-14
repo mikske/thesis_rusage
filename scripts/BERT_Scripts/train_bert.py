@@ -17,7 +17,7 @@ from scripts.BERT_Scripts.bert_train_utils import create_experiment_dir, set_see
 from scripts.BERT_Scripts.bert_metrics_logger import save_json, save_chunk_level_metrics
 
 #%%
-#обработка аргументов
+#обработка аргументов, специально запрашиваются, чтобы более гибко настраивать обучение
 def parse_args():
     parser = argparse.ArgumentParser()
 
