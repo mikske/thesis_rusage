@@ -159,7 +159,6 @@ def main():
         model=model,
         args=training_args,
         eval_dataset=val_dataset,
-        tokenizer=tokenizer,
         compute_metrics=build_compute_metrics_fn(),
     )
 
