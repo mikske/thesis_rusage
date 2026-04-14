@@ -153,6 +153,8 @@ def build_model(
     model = WeightedBERTClassifier(
         model_name=model_name,
         num_labels=num_labels,
+        freeze_encoder_flag=freeze_encoder_flag,
+        class_weights=class_weights,
     )
 
     if freeze_encoder_flag == 1:
