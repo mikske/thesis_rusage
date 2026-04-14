@@ -178,7 +178,7 @@ def main():
     print_model_stats(model)
 
     print("\n=== MODEL HEAD ===")
-    print(model.classifier)
+    print(model.model.classifier)
 
 #%%
 if __name__ == "__main__":
