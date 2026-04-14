@@ -59,6 +59,26 @@ def build_compute_metrics_fn():
     return compute_metrics
 
 #%%
+#функция для подсчета весов
+def compute_class_weights_from_dataset(train_dataset, num_labels: int) -> torch.Tensor:
+    label_counts = Counter()
+
+    for sample in train_dataset.samples:
+        label_counts[int(sample["label"])] += 1
+
+    total = sum(label_counts.values())
+
+    class_weights = []
+    for class_id in range(num_labels):
+        count = label_counts.get(class_id, 0)
+        if count == 0:
+            raise ValueError(f"Class {class_id} has 0 samples in train split.")
+        weight = total / (num_labels * count)
+        class_weights.append(weight)
+
+    return torch.tensor(class_weights, dtype=torch.float)
+
+#%%
 #здесь у нас происходит сборка run_name
 def resolve_run_name(args) -> str:
     if args.run_name is not None:
