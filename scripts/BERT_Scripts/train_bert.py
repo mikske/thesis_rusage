@@ -149,6 +149,7 @@ def main():
         model_name=args.model_name,
         num_labels=args.num_labels,
         freeze_encoder_flag=args.freeze,
+        class_weights=class_weights,
     )
 
     print(f"[INFO] run_name: {run_name}")
