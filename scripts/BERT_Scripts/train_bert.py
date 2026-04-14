@@ -138,6 +138,11 @@ def main():
         max_length=args.max_length,
     )
 
+    class_weights = compute_class_weights_from_dataset(
+        train_dataset=train_dataset,
+        num_labels=args.num_labels,
+    )
+
     model = build_model(
         model_name=args.model_name,
         num_labels=args.num_labels,
