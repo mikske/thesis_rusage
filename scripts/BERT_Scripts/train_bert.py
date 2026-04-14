@@ -196,8 +196,6 @@ def main():
 
     #%%
     #считаем финальные val метрики, сохраняем токенайзер, лучшую модель и метрики
-    train_result = trainer.train()
-    eval_metrics = trainer.evaluate(eval_dataset=val_dataset)
 
     train_result = trainer.train()
     eval_metrics = trainer.evaluate(eval_dataset=val_dataset)
