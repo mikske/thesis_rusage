@@ -143,6 +143,8 @@ def main():
         num_labels=args.num_labels,
     )
 
+    print(f"[INFO] class_weights: {class_weights.tolist()}")
+
     model = build_model(
         model_name=args.model_name,
         num_labels=args.num_labels,
