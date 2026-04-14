@@ -38,9 +38,15 @@ def compute_classification_metrics(
     )
 
     metrics = {
-        "accuracy": float(accuracy_score(y_true, y_pred)),
-        "macro_f1": float(f1_score(y_true, y_pred, average="macro")),
-        "weighted_f1": float(f1_score(y_true, y_pred, average="weighted")),
+        "accuracy": float(accuracy),
+
+        "macro_precision": float(macro_precision),
+        "macro_recall": float(macro_recall),
+        "macro_f1": float(macro_f1),
+
+        "weighted_precision": float(weighted_precision),
+        "weighted_recall": float(weighted_recall),
+        "weighted_f1": float(weighted_f1),
     }
 
     return metrics
