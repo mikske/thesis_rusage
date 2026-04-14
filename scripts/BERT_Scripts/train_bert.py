@@ -199,7 +199,13 @@ def main():
     train_result = trainer.train()
     eval_metrics = trainer.evaluate(eval_dataset=val_dataset)
 
-    trainer.save_metrics(str(best_model_dir))
+    train_result = trainer.train()
+    eval_metrics = trainer.evaluate(eval_dataset=val_dataset)
+
+    trainer.save_metrics("train", train_result.metrics)
+    trainer.save_metrics("eval", eval_metrics)
+
+    trainer.save_model(str(best_model_dir))
     tokenizer.save_pretrained(str(best_model_dir))
 
     chunk_metrics = {
