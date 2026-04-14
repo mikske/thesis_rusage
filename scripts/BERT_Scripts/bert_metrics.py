@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Dict, List
 
 import numpy as np
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from sklearn.utils.class_weight import compute_class_weight
 
 
