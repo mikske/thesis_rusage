@@ -206,8 +206,9 @@ def main():
     trainer.save_metrics("train", train_result.metrics)
     trainer.save_metrics("eval", eval_metrics)
 
-    #лучшая модель
-    trainer.save_model(str(best_model_dir))
+    #сохарняем не wrapper, в внутреннюю модель hf
+    hf_model = trainer.model.model if hasattr(trainer.model, "model") else trainer.model
+    hf_model.save_pretrained(str(best_model_dir))
     tokenizer.save_pretrained(str(best_model_dir))
 
     chunk_metrics = {
