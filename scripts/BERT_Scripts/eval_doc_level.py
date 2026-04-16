@@ -231,7 +231,7 @@ def main():
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_dir)
+    tokenizer = AutoTokenizer.from_pretrained("cointegrated/rubert-tiny2")
     model = AutoModelForSequenceClassification.from_pretrained(model_dir)
     model.to(device)
 
