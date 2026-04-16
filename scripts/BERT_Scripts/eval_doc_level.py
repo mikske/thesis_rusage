@@ -233,6 +233,10 @@ def main():
 
     tokenizer = AutoTokenizer.from_pretrained("cointegrated/rubert-tiny2")
     model = AutoModelForSequenceClassification.from_pretrained(model_dir)
+
+    print(f"[INFO] tokenizer vocab size: {len(tokenizer)}")
+    print(f"[INFO] model vocab size: {model.get_input_embeddings().num_embeddings}")
+    
     model.to(device)
 
     dataset = BERTDataset(
