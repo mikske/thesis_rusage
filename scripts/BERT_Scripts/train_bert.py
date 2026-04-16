@@ -174,6 +174,9 @@ def main():
         num_train_epochs=args.num_train_epochs,
         weight_decay=args.weight_decay,
 
+        #хочу попробовать warm up, мб улучшится качество
+        warmup_ratio=0.1,
+
         #оставляем лучшую по f1_macro
         load_best_model_at_end=True,
         metric_for_best_model="macro_f1",
