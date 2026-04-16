@@ -235,11 +235,7 @@ def main():
     model = AutoModelForSequenceClassification.from_pretrained(model_dir)
 
     print(f"[INFO] tokenizer vocab size: {len(tokenizer)}")
-    print(f"[INFO] model vocab size before resize: {model.get_input_embeddings().num_embeddings}")
-
-    model.resize_token_embeddings(len(tokenizer))
-
-    print(f"[INFO] model vocab size after resize: {model.get_input_embeddings().num_embeddings}")
+    print(f"[INFO] model vocab size: {model.get_input_embeddings().num_embeddings}")
 
     model.to(device)
 
